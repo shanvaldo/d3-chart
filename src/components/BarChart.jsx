@@ -1,4 +1,5 @@
-import { Component } from "react";
+import { Component } from 'react';
+import _ from 'lodash';
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -16,6 +17,8 @@ export default class BarChart extends Component {
 
   createBarChart = () => {
     const data = this.props.data;
+
+    let max = _.maxBy(data, function(o) { return o.value; });
 
     const svg = d3
       .select("svg")
@@ -41,7 +44,7 @@ export default class BarChart extends Component {
     const yScale = d3
       .scaleLinear()
       .range([height, 0])
-      .domain([0, 100]);
+      .domain([0, max.value]);
 
     const makeYLines = () => d3.axisLeft().scale(yScale);
 

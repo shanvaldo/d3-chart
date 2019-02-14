@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import BarChart from "./components/BarChart";
+import LineChart from "./components/LineChart";
 
 class App extends Component {
   constructor(props) {
@@ -9,60 +10,66 @@ class App extends Component {
       sample: [
         {
           month: "january",
-          value: "99"
+          value: 22
         },
         {
           month: "february",
-          value: "70"
+          value: 70
         },
         {
           month: "march",
-          value: "60"
+          value: 60
         },
         {
           month: "april",
-          value: "90"
+          value: 40
         },
         {
           month: "may",
-          value: "45"
+          value: 10
         },
         {
           month: "june",
-          value: "63"
+          value: 55
         },
         {
           month: "july",
-          value: "69"
+          value: 68
         },
         {
           month: "august",
-          value: "32"
+          value: 81
         },
         {
           month: "september",
-          value: "88"
+          value: 91
         },
         {
           month: "october",
-          value: "77"
+          value: 45
         },
         {
           month: "november",
-          value: "100"
+          value: 100
         },
         {
           month: "december",
-          value: "89"
+          value: 78
         }
       ]
-    }
+    };
   }
 
   render() {
     return (
       <div className="app">
-        <BarChart data={this.state.sample} width={1000} height={600} margin={80} />
+        {/* <BarChart
+          data={this.state.sample}
+          width={1000}
+          height={600}
+          margin={80}
+        /> */}
+        <LineChart />
       </div>
     );
   }
