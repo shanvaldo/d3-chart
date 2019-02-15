@@ -16,7 +16,11 @@ export default class LineChart extends Component {
   };
 
   createLineChart = () => {
-    const data = this.props.data;
+    const data = this.props.data.map(item => {
+      let newDate = item.date.split("-");
+      return { ...item, date: `${newDate[0]}/${newDate[1]}` };
+    });
+
     const margin = 80;
     const width = this.props.width - 2 * margin;
     const height = this.props.height - 2 * margin;
@@ -40,11 +44,7 @@ export default class LineChart extends Component {
       .scaleBand()
       .rangeRound([0, width])
       .padding(0.1)
-      .domain(
-        data.map(function(d) {
-          return d.month;
-        })
-      );
+      .domain(data.map(d => d.date));
 
     // Set Y-axis value range
     const yScale = d3
@@ -85,7 +85,7 @@ export default class LineChart extends Component {
     const line = d3
       .line()
       .x(function(d, i) {
-        return xScale(d.month) + xScale.bandwidth() / 2;
+        return xScale(d.date) + xScale.bandwidth() / 2;
       })
       .y(function(d) {
         return yScale(d.value);
@@ -99,8 +99,8 @@ export default class LineChart extends Component {
       .transition()
       .duration(1500)
       .attrTween("stroke-dasharray", function() {
-        var l = this.getTotalLength(),
-          i = d3.interpolateString("0," + l, l + "," + l);
+        let l = this.getTotalLength();
+        let i = d3.interpolateString("0," + l, l + "," + l);
         return function(t) {
           return i(t);
         };
@@ -112,7 +112,7 @@ export default class LineChart extends Component {
       .attr("class", "dot") // Assign a class for styling
 
       .attr("cx", function(d, i) {
-        return xScale(d.month) + xScale.bandwidth() / 2;
+        return xScale(d.date) + xScale.bandwidth() / 2;
       })
       .attr("cy", function(d) {
         return yScale(d.value);

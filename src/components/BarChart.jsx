@@ -16,7 +16,11 @@ export default class BarChart extends Component {
   };
 
   createBarChart = () => {
-    const data = this.props.data;
+    const data = this.props.data.map(item => {
+      let newDate = item.date.split("-");
+      return { ...item, date: `${newDate[0]}/${newDate[1]}` };
+    });
+
     const margin = 80;
     const width = this.props.width - 2 * margin;
     const height = this.props.height - 2 * margin;
@@ -39,7 +43,7 @@ export default class BarChart extends Component {
     const xScale = d3
       .scaleBand()
       .range([0, width])
-      .domain(data.map(s => s.month))
+      .domain(data.map(d => d.date))
       .padding(0.2);
 
     // Set Y-axis value range
@@ -81,7 +85,7 @@ export default class BarChart extends Component {
     barGroups
       .append("rect")
       .attr("class", "bar")
-      .attr("x", g => xScale(g.month))
+      .attr("x", g => xScale(g.date))
       .attr("y", g => yScale(g.value))
       .attr("height", g => height - yScale(g.value))
       .attr("width", xScale.bandwidth())
@@ -127,7 +131,7 @@ export default class BarChart extends Component {
     barGroups
       .append("text")
       .attr("class", "value")
-      .attr("x", a => xScale(a.month) + xScale.bandwidth() / 2)
+      .attr("x", a => xScale(a.date) + xScale.bandwidth() / 2)
       .attr("y", height)
       .attr("text-anchor", "middle")
       .text(a => `${a.value}%`)

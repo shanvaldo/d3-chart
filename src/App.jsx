@@ -11,51 +11,51 @@ class App extends Component {
     this.state = {
       sample: [
         {
-          month: "january",
+          date: "15-02-2019",
           value: 22
         },
         {
-          month: "february",
+          date: "14-02-2019",
           value: 70
         },
         {
-          month: "march",
+          date: "13-02-2019",
           value: 60
         },
         {
-          month: "april",
+          date: "12-02-2019",
           value: 40
         },
         {
-          month: "may",
+          date: "11-02-2019",
           value: 10
         },
         {
-          month: "june",
+          date: "10-02-2019",
           value: 55
         },
         {
-          month: "july",
+          date: "09-02-2019",
           value: 68
         },
         {
-          month: "august",
+          date: "08-02-2019",
           value: 81
         },
         {
-          month: "september",
+          date: "07-02-2019",
           value: 91
         },
         {
-          month: "october",
+          date: "06-02-2019",
           value: 45
         },
         {
-          month: "november",
+          date: "05-02-2019",
           value: 100
         },
         {
-          month: "december",
+          date: "04-02-2019",
           value: 78
         }
       ]
@@ -74,7 +74,7 @@ class App extends Component {
           data={this.state.sample}
           width={1000}
           height={600}
-          chartTitle="data"
+          chartTitle="course performance"
           xAxisTitle="months"
           yAxisTitle="values"
         />
@@ -82,7 +82,7 @@ class App extends Component {
           data={this.state.sample}
           width={1000}
           height={600}
-          chartTitle="data"
+          chartTitle="rating"
           xAxisTitle="months"
           yAxisTitle="values"
         />
