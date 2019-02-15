@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import _ from 'lodash';
+import { Component } from "react";
+import _ from "lodash";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -17,38 +17,41 @@ export default class BarChart extends Component {
 
   createBarChart = () => {
     const data = this.props.data;
-
-    let max = _.maxBy(data, function(o) { return o.value; });
-
-    const svg = d3
-      .select("svg")
-      .style("width", 1000)
-      .style("height", 600);
-    
-    const margin = this.props.margin;
+    const margin = 80;
     const width = this.props.width - 2 * margin;
     const height = this.props.height - 2 * margin;
+
+    const max = _.maxBy(data, function(o) {
+      return o.value;
+    });
+
+    const svg = d3
+      .select("#bar-chart-container")
+      .append("svg")
+      .attr("width", this.props.width)
+      .attr("height", this.props.height);
 
     const chart = svg
       .append("g")
       .attr("transform", `translate(${margin}, ${margin})`);
 
-    // Set X range
+    // Set X-axis value range
     const xScale = d3
       .scaleBand()
       .range([0, width])
       .domain(data.map(s => s.month))
       .padding(0.2);
 
-    // Set Y range
+    // Set Y-axis value range
     const yScale = d3
       .scaleLinear()
       .range([height, 0])
       .domain([0, max.value]);
 
+    // Define grid lines
     const makeYLines = () => d3.axisLeft().scale(yScale);
 
-    // Create bar
+    // Create bar chart
     const barGroups = chart
       .selectAll()
       .data(data)
@@ -74,7 +77,7 @@ export default class BarChart extends Component {
           .tickFormat("")
       );
 
-    // Chart bar raise up animation
+    // Chart bar raise up and hover animation
     barGroups
       .append("rect")
       .attr("class", "bar")
@@ -147,7 +150,7 @@ export default class BarChart extends Component {
       .attr("y", margin / 2.4)
       .attr("transform", "rotate(-90)")
       .attr("text-anchor", "middle")
-      .text("Values");
+      .text(this.props.yAxisTitle);
 
     svg
       .append("text")
@@ -155,7 +158,7 @@ export default class BarChart extends Component {
       .attr("x", width / 2 + margin)
       .attr("y", height + margin * 1.7)
       .attr("text-anchor", "middle")
-      .text("Months");
+      .text(this.props.xAxisTitle);
 
     svg
       .append("text")
@@ -163,13 +166,13 @@ export default class BarChart extends Component {
       .attr("x", width / 2 + margin)
       .attr("y", 40)
       .attr("text-anchor", "middle")
-      .text("Data");
+      .text(this.props.chartTitle);
   };
 
   render() {
     return (
       <div
-        className="container"
+        id="bar-chart-container"
         css={css`
           display: flex;
           justify-content: center;
@@ -180,19 +183,21 @@ export default class BarChart extends Component {
             fill: #ff6260;
           }
 
-          line {
-            stroke: grey;
-          }
-
-          line#limit {
+          #limit {
             stroke: #2fc8ff;
             stroke-width: 2;
             stroke-dasharray: 4;
           }
+
+          line {
+            stroke: grey;
+          }
+
+          text {
+            text-transform: capitalize;
+          }
         `}
-      >
-        <svg />
-      </div>
+      />
     );
   }
 }

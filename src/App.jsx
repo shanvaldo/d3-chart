@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
 
@@ -62,14 +64,28 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
-        {/* <BarChart
+      <div
+        className="app"
+        css={css`
+          margin: 50px auto;
+        `}
+      >
+        <LineChart
           data={this.state.sample}
           width={1000}
           height={600}
-          margin={80}
-        /> */}
-        <LineChart />
+          chartTitle="data"
+          xAxisTitle="months"
+          yAxisTitle="values"
+        />
+        <BarChart
+          data={this.state.sample}
+          width={1000}
+          height={600}
+          chartTitle="data"
+          xAxisTitle="months"
+          yAxisTitle="values"
+        />
       </div>
     );
   }
